@@ -12,7 +12,7 @@ nav_order: 6
 
 
 <!-- Drone Technology Webinar -->
-<div style=" border-left: 5px solid #e67e22; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+<div style=" border-left: 5px solid #e63922ff; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
   <h3 style="margin-top:0; ">05 May 2021 – <em>“Drones, the Future of Technology”</em></h3>
   <p style="font-weight: 500; margin-bottom: 10px;">Online session, Morocco Flying Labs & ENSA Berrechid</p>
   <p style="margin:0;">
@@ -61,7 +61,16 @@ nav_order: 6
 - help creating many drones types from scratch
 - hardware selection and preparations
 - Setting up PX4 or ArduPilot from scratch  
-- Mission planning, MAVLink basics, failsafe tuning  
+- Mission planning, MAVLink basics, failsafe tuning 
+- **Hands-on:**  
+  - Building a VTOL drone from scratch  
+  - Tuning a quadcopter for stable flight  
+  - Setting up a rover for autonomous navigation
+- **Advanced:**
+  - Customising PX4/ArduPilot for specific applications  
+  - Integrating sensors like LIDAR, cameras, and RTK GPS  
+  - Developing custom flight modes and behaviours
+### Robotics & Simulation 
 
 ### ROS-1 for Robots
 - Building a catkin workspace, URDF modelling  

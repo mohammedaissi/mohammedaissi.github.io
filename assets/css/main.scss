@@ -1,10 +1,10 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
+# Only the main Sass file needs front matter
 ---
 @charset "utf-8";
 
 // Dimensions
-$max-content-width: {{ site.max_width }};
+$max-content-width: unquote("{{ site.max_width | default: '1200px' }}");
 
 @import
   "variables",
@@ -24,9 +24,11 @@ $max-content-width: {{ site.max_width }};
   "tabler-icons/tabler-icons-outline.scss"
 ;
 
-// Custom styling for all post titles
+// Custom styling
 h1.post-title, .post-title {
-  //color: #2f2f2e;       // navy color
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 3rem;
+}
+h2, h3, h4, h5, h6 {
+  font-weight: 600;
 }

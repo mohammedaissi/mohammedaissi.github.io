@@ -5,15 +5,104 @@ date: 2025-09-07 00:40:00
 description: Bare-metal GPIO example — LEDs PD12..PD15 chasing forward and reverse with slow→fast→slow pattern
 tags: formatting links
 categories: sample-posts
+thumbnail: assets/img/blogs/STM32/stm32f411ve board.jpeg
 published: true
 ---
 
-This post shows how to control the **four user LEDs** on the STM32F411 Discovery board (PD12 = Green, PD13 = Orange, PD14 = Red, PD15 = Blue) in a **circular pattern**:  
+This post shows how to control 4x user LEDs on the STM32F411 Discovery board **(PD12 = <font color="green">GREEN</font>, PD13 = <font color="orange">ORANGE</font>, PD14 = <font color="red">RED</font>, PD15 = <font color="blue">BLUE</font>) in a **circular pattern**:  
 - forward (clockwise),  
 - reverse (counter-clockwise),  
 - with speed variation (slow → fast → slow).  
 
-We use only **register-level CMSIS**, no HAL.
+
+
+<!-- STM32F411 Disco LED ring demo (PD12=GREEN, PD13=ORANGE, PD14=RED, PD15=BLUE) -->
+<!-- Works in Markdown renderers that allow inline HTML/CSS (e.g., GitHub Pages). -->
+<style>
+  .stm32-leds { font-family: system-ui, sans-serif; margin: 1rem 0; }
+  .stm32-leds .ring { position: relative; width: 160px; height: 160px; margin: 0.5rem auto; }
+  .stm32-leds .led {
+    position: absolute; width: 26px; height: 26px; border-radius: 50%;
+    opacity: .25; box-shadow: 0 0 0 currentColor; transform: scale(1.0);
+    animation: blink var(--period,2.8s) infinite ease-in-out;
+    animation-delay: calc(var(--i,0) * var(--step,.55s));
+  }
+  /* positions (top, right, bottom, left) */
+  .pos0 { top: 0;             left: calc(50% - 13px); }
+  .pos1 { top: calc(50% - 13px); right: 0; }
+  .pos2 { bottom: 0;          left: calc(50% - 13px); }
+  .pos3 { top: calc(50% - 13px); left: 0; }
+
+  /* colors per PD pin */
+  .pd12 { color:#00c853; background:#00c853; } /* GREEN  */
+  .pd13 { color:#ff9800; background:#ff9800; } /* ORANGE */
+  .pd14 { color:#e53935; background:#e53935; } /* RED    */
+  .pd15 { color:#1e88e5; background:#1e88e5; } /* BLUE   */
+
+  /* animation = “highlight one LED at a time” with slow→fast→slow feel via easing */
+  @keyframes blink {
+    0%   { opacity:.25; box-shadow:0 0 0 currentColor; transform:scale(1.00); }
+    10%  { opacity:1.00; box-shadow:0 0 16px currentColor; transform:scale(1.18); }
+    25%  { opacity:.25; box-shadow:0 0 0 currentColor; transform:scale(1.00); }
+    100% { opacity:.25; box-shadow:0 0 0 currentColor; transform:scale(1.00); }
+  }
+
+  /* forward vs reverse = re-map delays */
+  .stm32-leds.forward .pd12 { --i:0; }  /* GREEN  → first  */
+  .stm32-leds.forward .pd13 { --i:1; }  /* ORANGE → second */
+  .stm32-leds.forward .pd14 { --i:2; }  /* RED    → third  */
+  .stm32-leds.forward .pd15 { --i:3; }  /* BLUE   → fourth */
+
+
+  .stm32-leds.reverse .pd12 { --i:0; }  /* GREEN  → first  */
+  .stm32-leds.reverse .pd15 { --i:1; }  /* BLUE   → second */
+  .stm32-leds.reverse .pd14 { --i:2; }  /* RED    → third  */
+  .stm32-leds.reverse .pd13 { --i:3; }  /* ORANGE → fourth */
+
+  .legend { text-align:center; font-size:.9rem; opacity:.8; }
+</style>
+
+<div style="display:flex; gap:160px; align-items:flex-start; flex-wrap:wrap;">
+  <!-- Forward (clockwise) -->
+  <div class="stm32-leds forward" style="--period:1.8s; --step:.55s;">
+    <div class="ring">
+      <div class="led pd12 pos0"></div>
+      <div class="led pd13 pos1"></div>
+      <div class="led pd14 pos2"></div>
+      <div class="led pd15 pos3"></div>
+    </div>
+    <div class="legend">Forward (clockwise)</div>
+  </div>
+
+  <!-- Reverse (counter-clockwise) -->
+  <div class="stm32-leds reverse" style="--period:1.8s; --step:.55s;">
+    <div class="ring">
+      <div class="led pd12 pos0"></div>
+      <div class="led pd13 pos1"></div>
+      <div class="led pd14 pos2"></div>
+      <div class="led pd15 pos3"></div>
+    </div>
+    <div class="legend">Reverse (counter-clockwise)</div>
+  </div>
+</div>
+
+<div class="col-sm mt-8 mt-md-0">
+  <div style="max-width:420px;margin:0;">
+    {% include figure.liquid path="assets/img/blogs/STM32/stm32f411ve board.jpeg" class="img-fluid rounded z-depth-1" %}
+  </div>
+</div>
+
+
+We use only **register-level CMSIS**, no **HAL Hardware Abstraction Layer**.
+**What is CMSIS?**  
+CMSIS (Cortex Microcontroller Software Interface Standard) is a set of low-level, vendor-independent C headers and functions for ARM Cortex microcontrollers. It lets you control hardware directly using registers.
+
+**What is HAL?**  
+HAL (Hardware Abstraction Layer) is a higher-level library provided by chip vendors (like STMicroelectronics). It makes hardware control easier by hiding register details, but can be less efficient than CMSIS.
+
+[Learn more about CMSIS in the official ARM documentation.](https://www.keil.arm.com/cmsis)
+
+
 
 ---
 

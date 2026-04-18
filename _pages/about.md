@@ -31,14 +31,6 @@ Currently, I work as a **Software Engineer at Lear Corporation**, where I contri
 - **Model-Based Design (Simulink, Stateflow)**
 - **Functional Safety (ISO 26262)**
 - **Software Testing (MIL/SIL, CAPL, CANoe, Python)**
-- **Diagnostics (UDS, ODX, DoIP)**
-- **Model-Based Design (Simulink, Stateflow)**
-- **Functional Safety (ISO 26262)**
-- **Software Testing (MIL/SIL, CAPL, CANoe, Python)**
-- **Diagnostics (UDS, ODX, DoIP)**
-- **Model-Based Design (Simulink, Stateflow)**
-- **Functional Safety (ISO 26262)**
-- **Software Testing (MIL/SIL, CAPL, CANoe, Python)**
 
 Previously, I spent 5+ years at **ATLAN Space** leading **drone R&D projects** involving:
 - Custom UAV design and assembly
